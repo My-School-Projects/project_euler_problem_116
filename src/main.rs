@@ -1,7 +1,8 @@
-// These are experimental language features, so I have to enable them manually.
-// I'm using them because they drastically improve the readability of
-// for loop syntax.
-#![feature(inclusive_range_syntax)]
+// Important to understand the range of the for loops:
+// In rust, the range n..m means every value from n to m-1.
+// So if you write for i in 0..100, i will start at zero and go to 99.
+// Therefore you will see a lot of (n..m+1)'s in this code,
+// which means from n to m, inclusive.
 
 fn main() {
     let s1 = 5;
@@ -18,10 +19,10 @@ fn possible_choices(spaces: u64) -> u64
 {
     let mut ans = 0;
 
-    for block_size in 2...4 {
+    for block_size in 2..4+1 {
         // We iterate from 1 to the maximum number of blocks we can fit
         // in the given number of spaces
-        for r in 1...spaces/block_size {
+        for r in 1..(spaces/block_size)+1 {
             // We're going to compute n C r (n choose r).
             // The r values count up from 1.
             // The n values need to count down from spaces - 1,
@@ -47,7 +48,7 @@ fn choose(n: u64, r: u64) -> u64
         return choose(n, n - r)
     }
     let mut ans = 1;
-    for i in 1...r {
+    for i in 1..r+1 {
         ans = (ans * n - r + i) / i; // who knows what this does ¯\_(ツ)_/¯
     }
     ans
